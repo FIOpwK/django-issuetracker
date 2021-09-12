@@ -3,6 +3,8 @@ Functional testing for selenium webdriver on Firefox browser.
 Obeying the testing goat
 """
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
 import unittest
 
 
@@ -24,17 +26,38 @@ class NewVisitorTest(unittest.TestCase):
         # Scenario: A user should be on the issue tracker homepage noted
         # by the title and header elements mentioning Issue-Tracker
         self.assertIn('Issue-Tracker', self.browser.title)
-        self.fail('Finish the testing!-->')
+        header_text = self.browser.find_element_by_tag_name('h1').text
+        self.assertIn('Submit new issue', header_text)
 
 
         # Scenario: A user is invited to enter a new bug/issue straight away
+        inputbox = self.browser.find_element_by_id('id_new_issue')
+        self.assertEqual(
+            inputbox.get_attribute('placeholder'),
+            'Submit a new issue'
+        )
 
         # Scenario: A user is able to type "Bug in peacock feathers app" into
         # a text box
-
         # Given the user is typing in the text box
-        # When the user hits enter
+        inputbox.send_keys('Bug in peacock feathers app')
+
+        #When the user hits enter
+        inputbox.send_keys(Keys.ENTER)
+        time.sleep(1)
+
+        table = self.browser.find_element_by_id('id_issue_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertTrue(
+            any(row.text == '1: Bug in peacock feathers app' for row in rows)
+        )
+
+        self.fail('Finish the testing!-->')
         # Then the page updates and how a new issue has been created
+        [...]
+        
+
+
 
         # Scenario: A user is able to still add other information
         # Given the user has more details to offer
