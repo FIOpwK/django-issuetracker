@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import resolve
 from django.http import HttpRequest
 from django.template.loader import render_to_string
+from issues.models import Issue
 
 from issues.views import home_page
 
@@ -17,3 +18,16 @@ class HomePageTest(TestCase):
         response = self.client.post('/', data={'issue_text': 'A new issue item'})
         self.assertIn('A new issue item', response.content.decode())
         self.assertTemplateUsed(response, 'home.html')
+
+class ItemModelTest(TestCase):
+
+    def test_saving_and_retrieving_items(self):
+        first_item = Issue()
+        first_item.text = 'The first (ever) issue item'
+        first_item.save()
+
+        saved_items = Issue.objects.all()
+        self.assertEqual(saved_items.count(), 1)
+
+        first_saved_item = saved_items[0]
+        self.assertEqual(first_saved_item.text, 'The first (ever) issue item')

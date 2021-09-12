@@ -55,6 +55,7 @@ class NewVisitorTest(unittest.TestCase):
         # Given the user has more details to offer
         # When the user enters more information of the issue; "Using peacock app crashes"
         # Then then page updates again, now showing more details in the ticket(list)
+
         self.fail('Finish the testing!-->')
 
         # Scenario: A user wants to see the site has generate a unique report
