@@ -14,6 +14,6 @@ class HomePageTest(TestCase):
         self.assertTemplateUsed(response, 'home.html')
 
     def test_can_save_a_POST_request(self):
-        response = self.client.post('/', data={'item_text': 'A new issue item'})
+        response = self.client.post('/', data={'issue_text': 'A new issue item'})
         self.assertIn('A new issue item', response.content.decode())
-        
+        self.assertTemplateUsed(response, 'home.html')

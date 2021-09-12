@@ -16,7 +16,6 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.quit()
 
     def test_can_start_a_new_issue_add_retrieve_it_later(self):
-
         # User Story: Scenario - A user wants to submit a new bug in an issue tracker.
         # Given the users visits the issue tracker homepage
         # When the users opens the homepage
@@ -28,7 +27,6 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn('Issue-Tracker', self.browser.title)
         header_text = self.browser.find_element_by_tag_name('h3').text
         self.assertIn('Submit new issue', header_text)
-
 
         # Scenario: A user is invited to enter a new bug/issue straight away
         inputbox = self.browser.find_element_by_id('id_new_issue')
@@ -42,27 +40,21 @@ class NewVisitorTest(unittest.TestCase):
         # Given the user is typing in the text box
         inputbox.send_keys('Bug in peacock feathers app')
 
-        #When the user hits enter
+        # When the user hits enter
         inputbox.send_keys(Keys.ENTER)
         time.sleep(3)
 
         table = self.browser.find_element_by_id('id_issue_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertTrue(
-            any(row.text == '1: Bug in peacock feathers app' for row in rows),
-            "New issue item did not appear in table"
-        )
+        self.assertIn('Bug in peacock feathers app', [row.text for row in rows])
 
         # Scenario: A user is greeted with a form element to post
-        form = self.browser.find_element_by_tag_name('form')
-        self.assertIs(form, 'form')
+        # form = self.browser.find_element_by_tag_name('form')
+        # self.assert(form, 'form')
 
         self.fail('Finish the testing!-->')
         # Then the page updates and how a new issue has been created
         [...]
-        
-
-
 
         # Scenario: A user is able to still add other information
         # Given the user has more details to offer
@@ -75,6 +67,7 @@ class NewVisitorTest(unittest.TestCase):
         # Then the information entered is still there
 
         # And the user goes back to triage
+
 
 if __name__ == '__main__':
     unittest.main()

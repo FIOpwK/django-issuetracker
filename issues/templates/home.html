@@ -7,10 +7,11 @@
         <h3>Submit new issue</h3>
         <form action="" method="post">
 
-            <input type="text" id="id_new_issue" placeholder="Submit a new issue">
+            <input type="text" name="issue_text" id="id_new_issue" placeholder="Submit a new issue">
             {% csrf_token %}
         </form>
         <table id="id_issue_table">
+            <tr><td>{{ new_issue_text }}</td></tr>
 
         </table>
 
