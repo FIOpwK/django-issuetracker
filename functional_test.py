@@ -29,24 +29,25 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn('Submit new issue', header_text)
 
         # Scenario: A user is invited to enter a new bug/issue straight away
-        inputbox = self.browser.find_element_by_id('id_new_issue')
+        inbox = self.browser.find_element_by_id('id_new_issue')
         self.assertEqual(
-            inputbox.get_attribute('placeholder'),
+            inbox.get_attribute('placeholder'),
             'Submit a new issue'
         )
 
         # Scenario: A user is able to type "Bug in peacock feathers app" into
         # a text box
         # Given the user is typing in the text box
-        inputbox.send_keys('Bug in peacock feathers app')
+        inbox.send_keys('Bug in peacock feathers app')
 
         # When the user hits enter
-        inputbox.send_keys(Keys.ENTER)
+        inbox.send_keys(Keys.ENTER)
         time.sleep(3)
 
+    def check_for_row_in_issue_table(self, row_text):
         table = self.browser.find_element_by_id('id_issue_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('Bug in peacock feathers app', [row.text for row in rows])
+        self.assertIn(row_text, [row.text for row in rows])
 
         # Scenario: A user is greeted with a form element to post
         # form = self.browser.find_element_by_tag_name('form')
