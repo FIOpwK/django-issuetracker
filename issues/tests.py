@@ -11,6 +11,14 @@ from issues.views import home_page
 class HomePageTest(TestCase):
     [...]
 
+    def test_displays_all_issue_items(self):
+        Issue.objects.create(text='issue 1')
+        Issue.objects.create(text='issue 2')
+
+        response = self.client.get('/')
+
+        self.assertIn('issue', response.content.decode())
+
     def test_only_saves_issues_when_necessary(self):
         self.client.get('/')
         self.assertEqual(Issue.objects.count(), 0)
@@ -22,11 +30,15 @@ class HomePageTest(TestCase):
     def test_can_save_a_POST_request(self):
         response = self.client.post('/', data={'issue_text': 'A new issue item'})
         self.assertEqual(Issue.objects.count(), 1)
+
         new_issue = Issue.objects.first()
         self.assertEqual(new_issue.text, 'A new issue item')
 
-        self.assertIn('A new issue item', response.content.decode())
-        self.assertTemplateUsed(response, 'home.html')
+    def test_redirects_after_POST(self):
+        # always redirect after post req
+        response = self.client.post('/', data={'issue_text': 'A new issue item'})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response['location'], '/')
 
 
 class ItemModelTest(TestCase):
