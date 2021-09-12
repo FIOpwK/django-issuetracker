@@ -44,7 +44,7 @@ class NewVisitorTest(unittest.TestCase):
 
         #When the user hits enter
         inputbox.send_keys(Keys.ENTER)
-        time.sleep(1)
+        time.sleep(3)
 
         table = self.browser.find_element_by_id('id_issue_table')
         rows = table.find_elements_by_tag_name('tr')
@@ -52,6 +52,10 @@ class NewVisitorTest(unittest.TestCase):
             any(row.text == '1: Bug in peacock feathers app' for row in rows),
             "New issue item did not appear in table"
         )
+
+        # Scenario: A user is greeted with a form element to post
+        form = self.browser.find_element_by_tag_name('form')
+        self.assertIs(form, 'form')
 
         self.fail('Finish the testing!-->')
         # Then the page updates and how a new issue has been created

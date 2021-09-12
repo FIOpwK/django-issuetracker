@@ -5,7 +5,11 @@
     </head>
     <body>
         <h3>Submit new issue</h3>
-        <input type="text" id="id_new_issue" placeholder="Submit a new issue">
+        <form action="" method="post">
+
+            <input type="text" id="id_new_issue" placeholder="Submit a new issue">
+            {% csrf_token %}
+        </form>
         <table id="id_issue_table">
 
         </table>
