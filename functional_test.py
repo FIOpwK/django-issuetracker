@@ -26,7 +26,7 @@ class NewVisitorTest(unittest.TestCase):
         # Scenario: A user should be on the issue tracker homepage noted
         # by the title and header elements mentioning Issue-Tracker
         self.assertIn('Issue-Tracker', self.browser.title)
-        header_text = self.browser.find_element_by_tag_name('h1').text
+        header_text = self.browser.find_element_by_tag_name('h3').text
         self.assertIn('Submit new issue', header_text)
 
 
@@ -49,7 +49,8 @@ class NewVisitorTest(unittest.TestCase):
         table = self.browser.find_element_by_id('id_issue_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertTrue(
-            any(row.text == '1: Bug in peacock feathers app' for row in rows)
+            any(row.text == '1: Bug in peacock feathers app' for row in rows),
+            "New issue item did not appear in table"
         )
 
         self.fail('Finish the testing!-->')
