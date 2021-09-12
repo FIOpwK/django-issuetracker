@@ -44,28 +44,27 @@ class NewVisitorTest(unittest.TestCase):
         inbox.send_keys(Keys.ENTER)
         time.sleep(3)
 
+    # Scenario: A user is greeted with a form element to post
+    # Then the page updates and now a new issue has been created
     def check_for_row_in_issue_table(self, row_text):
         table = self.browser.find_element_by_id('id_issue_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertIn(row_text, [row.text for row in rows])
 
-        # Scenario: A user is greeted with a form element to post
-        # form = self.browser.find_element_by_tag_name('form')
-        # self.assert(form, 'form')
-
-        self.fail('Finish the testing!-->')
-        # Then the page updates and how a new issue has been created
-        [...]
-
         # Scenario: A user is able to still add other information
         # Given the user has more details to offer
         # When the user enters more information of the issue; "Using peacock app crashes"
         # Then then page updates again, now showing more details in the ticket(list)
+        self.fail('Finish the testing!-->')
 
         # Scenario: A user wants to see the site has generate a unique report
         # Given the site has remembered the user's data
         # When the user visits the bug report
         # Then the information entered is still there
+        def test_can_start_an_issue_and_retrieve_it_later(self):
+            pass
+
+        [...]
 
         # And the user goes back to triage
 
