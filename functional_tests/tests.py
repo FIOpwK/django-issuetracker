@@ -2,13 +2,14 @@
 Functional testing for selenium webdriver on Firefox browser.
 Obeying the testing goat
 """
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 import unittest
 
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
     def setUp(self) -> None:
         self.browser = webdriver.Firefox()
 
@@ -20,7 +21,7 @@ class NewVisitorTest(unittest.TestCase):
         # Given the users visits the issue tracker homepage
         # When the users opens the homepage
         # Then the homepage should be displayed
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
 
         # Scenario: A user should be on the issue tracker homepage noted
         # by the title and header elements mentioning Issue-Tracker
@@ -68,7 +69,3 @@ class NewVisitorTest(unittest.TestCase):
         [...]
 
         # And the user goes back to triage
-
-
-if __name__ == '__main__':
-    unittest.main()

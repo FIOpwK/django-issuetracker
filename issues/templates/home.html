@@ -13,7 +13,7 @@
         </form>
         <table id="id_issue_table">
             {% for issue in issues %}
-            <tr><td>{{ new_issue_text }}</td></tr>
+            <tr><td>{{ issue.text }}</td></tr>
             {% endfor %}
 
         </table>
