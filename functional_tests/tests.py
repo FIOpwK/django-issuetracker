@@ -63,8 +63,6 @@ class NewVisitorTest(LiveServerTestCase):
         # Given the site has remembered the user's data
         # When the user visits the bug report
         # Then the information entered is still there
-        def test_can_start_an_issue_and_retrieve_it_later(self):
-            pass
 
         [...]
 

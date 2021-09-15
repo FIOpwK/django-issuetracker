@@ -13,7 +13,9 @@
         </form>
         <table id="id_issue_table">
             {% for issue in issues %}
-            <tr><td>{{ issue.text }}</td></tr>
+                {% if issue.text %}
+            <tr><td>{{ issue.id }} | {{ issue.text }}</td></tr>
+                {% endif %}
             {% endfor %}
 
         </table>
