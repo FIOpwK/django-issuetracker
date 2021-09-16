@@ -9,7 +9,6 @@ from issues.views import home_page
 
 # Create your tests here.
 class HomePageTest(TestCase):
-    [...]
 
     def test_displays_all_issue_items(self):
         Issue.objects.create(text='issue 1')

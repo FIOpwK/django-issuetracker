@@ -5,8 +5,10 @@ Obeying the testing goat
 from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import WebDriverException
 import time
-import unittest
+
+MAX_WAIT = 10
 
 
 class NewVisitorTest(LiveServerTestCase):
@@ -43,21 +45,31 @@ class NewVisitorTest(LiveServerTestCase):
 
         # When the user hits enter
         inbox.send_keys(Keys.ENTER)
-        time.sleep(3)
+        self.wait_for_row_in_issue_table('1 | Bug in peacock feathers app')
+
+        self.fail('Finish the testing!-->')
 
     # Scenario: A user is greeted with a form element to post
     # Then the page updates and now a new issue has been created
-    def check_for_row_in_issue_table(self, row_text):
-        table = self.browser.find_element_by_id('id_issue_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn(row_text, [row.text for row in rows])
+    def wait_for_row_in_issue_table(self, row_text):
+        start_time = time.time()
+        while True:
+            try:
 
-        # Scenario: A user is able to still add other information
-        # Given the user has more details to offer
-        # When the user enters more information of the issue; "Using peacock app crashes"
-        # Then then page updates again, now showing more details in the ticket(list)
+                table = self.browser.find_element_by_id('id_issue_table')
+                rows = table.find_elements_by_tag_name('tr')
+                self.assertIn(row_text, [row.text for row in rows])
+                return
+            except (AssertionError, WebDriverException) as e:
+                if time.time() - start_time > MAX_WAIT:
+                    raise e
+                time.sleep(0.5)
 
-        self.fail('Finish the testing!-->')
+        #     # Scenario: A user is able to still add other information
+        #     # Given the user has more details to offer
+        #     # When the user enters more information of the issue; "Using peacock app crashes"
+        #     # Then then page updates again, now showing more details in the ticket(list)
+        #
 
         # Scenario: A user wants to see the site has generate a unique report
         # Given the site has remembered the user's data
