@@ -5,20 +5,12 @@
     </head>
     <body>
         <h3>Submit new issue</h3>
-        <form action="" method="post">
+        <form action="/" method="post">
 
             <label for="id_new_issue"></label><input type="text" name="issue_text" id="id_new_issue" placeholder="Submit a new issue">
             {% csrf_token %}
             <button>Submit</button>
         </form>
-        <table id="id_issue_table">
-            {% for issue in issues %}
-                {% if issue.text %}
-            <tr><td>{{ issue.id }} | {{ issue.text }}</td></tr>
-                {% endif %}
-            {% endfor %}
-
-        </table>
 
     </body>
 </html>

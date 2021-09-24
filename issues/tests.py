@@ -10,14 +10,6 @@ from issues.views import home_page
 # Create your tests here.
 class HomePageTest(TestCase):
 
-    def test_displays_all_issue_items(self):
-        Issue.objects.create(text='issue 1')
-        Issue.objects.create(text='issue 2')
-
-        response = self.client.get('/')
-
-        self.assertIn('issue', response.content.decode())
-
     def test_only_saves_issues_when_necessary(self):
         self.client.get('/')
         self.assertEqual(Issue.objects.count(), 0)
@@ -37,7 +29,7 @@ class HomePageTest(TestCase):
         # always redirect after post req
         response = self.client.post('/', data={'issue_text': 'A new issue item'})
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['location'], '/')
+        self.assertEqual(response['location'], '/issues/the-only-issue/')
 
 
 class ItemModelTest(TestCase):
@@ -52,3 +44,18 @@ class ItemModelTest(TestCase):
 
         first_saved_item = saved_items[0]
         self.assertEqual(first_saved_item.text, 'The first (ever) issue item')
+
+
+class ListViewTest(TestCase):
+    def test_uses_issues_template(self):
+        response = self.client.get('/issues/the-only-issue/')
+        self.assertTemplateUsed(response, 'issues.html')
+
+    def test_displays_all_issues(self):
+        Issue.objects.create(text='issue 1')
+        Issue.objects.create(text='issue 2')
+
+        response = self.client.get('/issues/the-only-issue/')
+
+        self.assertContains(response, 'issue 1')
+        self.assertContains(response, 'issue 2')

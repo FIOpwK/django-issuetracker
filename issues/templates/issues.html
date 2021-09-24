@@ -1,0 +1,13 @@
+<html lang="en">
+    <body>
+            <table id="id_issue_table">
+            {% for issue in issues %}
+                {% if issue.text %}
+            <tr><td>{{ issue.id }} | {{ issue.text }}</td></tr>
+                {% endif %}
+            {% endfor %}
+
+        </table>
+    </body>
+
+</html>
