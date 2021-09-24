@@ -47,10 +47,9 @@ class NewVisitorTest(LiveServerTestCase):
         inbox.send_keys(Keys.ENTER)
         self.wait_for_row_in_issue_table('1 | Bug in peacock feathers app')
 
-        self.fail('Finish the testing!-->')
+        # Scenario: A user is greeted with a form element to post
+        # Then the page updates and now a new issue has been created
 
-    # Scenario: A user is greeted with a form element to post
-    # Then the page updates and now a new issue has been created
     def wait_for_row_in_issue_table(self, row_text):
         start_time = time.time()
         while True:
@@ -76,6 +75,46 @@ class NewVisitorTest(LiveServerTestCase):
         # When the user visits the bug report
         # Then the information entered is still there
 
-        [...]
+    def test_can_start_a_issue_for_one_user(self):
+
+        # page updates again showing both items on list
+        self.wait_for_row_in_issue_table('1 | Bug in peacock feathers app')
 
         # And the user goes back to triage
+
+    def test_multiple_users_can_start_a_issue_at_different_urls(self):
+        self.browser.get(self.live_server_url)
+        inbox = self.browser.find_element_by_id('id_new_issue')
+        inbox.send_keys('Bump peacock feathers app version')
+        inbox.send_keys(Keys.ENTER)
+        self.wait_for_row_in_issue_table('2 | Bump peacock feathers app version')
+
+        # unique url Edith
+        user_issue_url = self.browser.current_url
+        self.assertRegex(user_issue_url, '/issues/.+')
+        self.browser.quit()
+        self.browser = webdriver.Firefox()
+
+        # new users Francis
+        self.browser.get(self.live_server_url)
+        page_text = self.browser.find_element_by_tag_name('body').text
+        self.assertNotIn('2 | Bump peacock feathers app version', page_text)
+        self.assertNotIn('Bug in peacock feathers app', page_text)
+
+        # new issue is created
+        inbox = self.browser.find_element_by_id('id_new_issue')
+        inbox.send_keys('Peacock feathers v2 has invalid subfield_id')
+        inbox.send_keys(Keys.ENTER)
+        self.wait_for_row_in_issue_table('2 | Peacock feathers v2 has invalid subfield_id')
+
+        # unique URL
+        user2_issue_url = self.browser.current_url
+        self.assertRegex(user2_issue_url, '/issues/.+')
+        self.assertNotEqual(user2_issue_url, user_issue_url)
+
+        # checking for other issues not submitted by user2
+        page_text = self.browser.find_element_by_tag_name('body').text
+        self.assertNotIn('Bug in peacock feathers app', page_text)
+        self.assertIn('Peacock feathers v2 has invalid subfield_id', page_text)
+
+        self.fail('Finish the testing!-->')
