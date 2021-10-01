@@ -17,7 +17,7 @@ cd django-issuetracker
 python -m virtualenv env
 ```
 ```bash
-py.exe -m
+py.exe -m venv . 
 ```
 4. Activate the new environment
 ```bash
