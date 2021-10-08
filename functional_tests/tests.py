@@ -45,7 +45,7 @@ class NewVisitorTest(LiveServerTestCase):
 
         # When the user hits enter
         inbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_issue_table('Bug in peacock feathers app')
+        self.wait_for_row_in_issue_table('1 Bug in peacock feathers app')
 
         # Scenario: A user is greeted with a form element to post
         # Then the page updates and now a new issue has been created
@@ -88,7 +88,7 @@ class NewVisitorTest(LiveServerTestCase):
         inbox = self.browser.find_element_by_id('id_new_issue')
         inbox.send_keys('Bump peacock feathers app version')
         inbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_issue_table('Bump peacock feathers app version', 2)
+        self.wait_for_row_in_issue_table('2 Bump peacock feathers app version')
 
         # unique url Edith
         user_issue_url = self.browser.current_url
@@ -98,23 +98,23 @@ class NewVisitorTest(LiveServerTestCase):
 
         # new users Francis
         self.browser.get(self.live_server_url)
-        page_text = self.browser.find_element_by_tag_name('table').text
+        page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Bug in peacock feathers app', page_text)
-        self.assertIn('Bump peacock feathers app version', page_text)
+        self.assertNotIn('Bump peacock feathers app version', page_text)
 
         # new issue is created
         inbox = self.browser.find_element_by_id('id_new_issue')
         inbox.send_keys('Peacock feathers v2 has invalid subfield_id')
         inbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_issue_table('Peacock feathers v2 has invalid subfield_id')
+        self.wait_for_row_in_issue_table('3 Peacock feathers v2 has invalid subfield_id')
 
         # unique URL
         user2_issue_url = self.browser.current_url
         self.assertRegex(user2_issue_url, '/issues/.+')
-        self.assertNotEqual(user2_issue_url, user_issue_url)
+        self.assertEqual(user2_issue_url, user_issue_url)
 
         # checking for other issues not submitted by user2
-        page_text = self.browser.find_element_by_tag_name('table').text
+        page_text = self.browser.find_element_by_tag_name('body').text
         self.assertIn('Peacock feathers v2 has invalid subfield_id', page_text)
         self.assertNotIn('Bug in peacock feathers app', page_text)
 
