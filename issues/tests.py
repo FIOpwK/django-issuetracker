@@ -59,3 +59,18 @@ class ListViewTest(TestCase):
 
         self.assertContains(response, 'issue 1')
         self.assertContains(response, 'issue 2')
+
+    class NewIssueTest(TestCase):
+        def test_can_save_POST_request(self):
+            self.client.post('/issues/new', data=
+            {'issue_text': 'A new issue item'})
+            self.assertEqual(Issue.objects.count(), 1)
+            new_issue = Issue.objects.first()
+            self.assertEqual(new_issue.text, 'A new issue item')
+
+        def test_redirects_after_POST(self):
+            response = self.client.post('/issues/new',
+                                        data={'issue_text': 'A new issue item'})
+            self.assertEqual(response.status_code, 302)
+            self.assertEqual(response['location'],
+                             '/issues/the-only-issue/')
