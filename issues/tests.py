@@ -52,7 +52,7 @@ class ListViewTest(TestCase):
         self.assertTemplateUsed(response, 'issues.html')
 
     def test_displays_all_issues(self):
-        pass
+        [...]
 
     class NewIssueTest(TestCase):
         def test_can_save_POST_request(self):
