@@ -93,6 +93,7 @@ class NewVisitorTest(LiveServerTestCase):
         # unique url Edith
         user_issue_url = self.browser.current_url
         self.assertRegex(user_issue_url, '/issues/.+')
+        
         self.browser.quit()
         self.browser = webdriver.Firefox()
 
