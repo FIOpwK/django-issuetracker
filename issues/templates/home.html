@@ -4,13 +4,22 @@
         <title>Issue-Tracker</title>
     </head>
     <body>
-        <h3>Submit new issue</h3>
-        <form method="post">
+    <div class="container">
+        <section>
 
-            <label for="id_new_issue"></label><input type="text" name="issue_text" id="id_new_issue" placeholder="Submit a new issue">
-            {% csrf_token %}
-            <button>Submit</button>
-        </form>
+            <h3>Submit new issue</h3>
+        </section>
+        <section>
+
+            <form method="post">
+
+                <label for="id_new_issue"></label><input type="text" name="issue_text" id="id_new_issue" placeholder="Submit a new issue">
+                {% csrf_token %}
+                <button>Submit</button>
+            </form>
+        </section>
+
+    </div>
 
     </body>
 </html>
