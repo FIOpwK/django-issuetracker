@@ -29,7 +29,7 @@ class HomePageTest(TestCase):
         # always redirect after post req
         response = self.client.post('/', data={'issue_text': 'A new issue item'})
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['location'], '/issues/the-only-issue/')
+        self.assertEqual(response['location'], '/issues/the-only-issue-in-the-database/')
 
 
 class ItemModelTest(TestCase):
@@ -48,14 +48,23 @@ class ItemModelTest(TestCase):
 
 class ListViewTest(TestCase):
     def test_uses_issues_template(self):
-        response = self.client.get('/issues/the-only-issue/')
+        response = self.client.get('/issues/the-only-issue-in-the-database/')
         self.assertTemplateUsed(response, 'issues.html')
 
     def test_displays_all_issues(self):
-        Issue.objects.create(text='issue 1')
-        Issue.objects.create(text='issue 2')
+        [...]
 
-        response = self.client.get('/issues/the-only-issue/')
+    class NewIssueTest(TestCase):
+        def test_can_save_POST_request(self):
+            self.client.post('/issues/new', data=
+            {'issue_text': 'A new issue item'})
+            self.assertEqual(Issue.objects.count(), 1)
+            new_issue = Issue.objects.first()
+            self.assertEqual(new_issue.text, 'A new issue item')
 
-        self.assertContains(response, 'issue 1')
-        self.assertContains(response, 'issue 2')
+        def test_redirects_after_POST(self):
+            response = self.client.post('/issues/new',
+                                        data={'issue_text': 'A new issue item'})
+            self.assertEqual(response.status_code, 302)
+            self.assertEqual(response['location'],
+                             '/issues/the-only-issue-in-the-database/')

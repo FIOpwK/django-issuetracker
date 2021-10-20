@@ -7,7 +7,7 @@ def home_page(request):
 
     if request.method == 'POST':
         Issue.objects.create(text=request.POST['issue_text'])
-        return redirect('/issues/the-only-issue/')
+        return redirect('/issues/the-only-issue-in-the-database/')
     return render(request, 'home.html')
 
 
