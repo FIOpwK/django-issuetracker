@@ -12,9 +12,9 @@ git clone https://github.com/FIOpwK/django-issuetracker
 ```bash
 cd django-issuetracker
 ```
-3. Create a new virtual environment `env` in the directory
+3. Create a new virtual environment `virtualenv` in the directory
 ```bash
-python -m virtualenv env
+python -m venv virtualenv
 ```
 ```bash
 py.exe -m venv . 
@@ -23,9 +23,14 @@ py.exe -m venv .
 ```bash
 source env/bin/activate
 ```
+
+```bash
+.\virtualenv\Scripts\activate
+
+```
 5. Install dependencies in new environment
 ```bash
-pip install selenium webdriver django
+pip install selenium webdriver django psycopg2
 ```
 6. Run the server locally
 ```bash
@@ -36,6 +41,8 @@ python manage.py runserver
 - selenium webdriver
 - geckodriver
 - django
+- postgresql
+- psycopg2
 
 # testing
 unit test:  `py.exe manage.py test issues`,
