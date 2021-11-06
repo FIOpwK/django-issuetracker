@@ -57,7 +57,7 @@ class NewVisitorTest(LiveServerTestCase):
 
                 table = self.browser.find_element_by_id('id_issue_table')
                 rows = table.find_elements_by_tag_name('tr')
-                rows_header = table.find_elements_by_tag_name('th')
+                # rows_header = table.find_elements_by_tag_name('th')
                 self.assertIn(row_text, [row.text for row in rows])
                 return
             except (AssertionError, WebDriverException) as e:

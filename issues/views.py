@@ -14,3 +14,7 @@ def home_page(request):
 def view_issues(request):
     issues = Issue.objects.all()
     return render(request, 'issues.html', {'issues': issues})
+
+def new_issue(request):
+    Issue.objects.create(text=request.POST['issue_text'])
+    return redirect('/issues/the-only-issue-in-the-database/')

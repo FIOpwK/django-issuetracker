@@ -20,5 +20,9 @@ from issues import views
 
 urlpatterns = [
     url(r'^$', views.home_page, name='home'),
-    url(r'^issues/the-only-issue-in-the-database/$', views.view_issues, name='view_issues')
+    url(r'^issues/new$', views.new_issue, name='new_issue'),
+    url(r'^issues/the-only-issue-in-the-database/$', views.view_issues, name='view_issues'),
+
+
+
 ]

@@ -51,6 +51,7 @@ class ListViewTest(TestCase):
         response = self.client.get('/issues/the-only-issue-in-the-database/')
         self.assertTemplateUsed(response, 'issues.html')
 
+
     def test_displays_all_issues(self):
         [...]
 
@@ -63,8 +64,6 @@ class ListViewTest(TestCase):
             self.assertEqual(new_issue.text, 'A new issue item')
 
         def test_redirects_after_POST(self):
-            response = self.client.post('/issues/new',
-                                        data={'issue_text': 'A new issue item'})
-            self.assertEqual(response.status_code, 302)
-            self.assertEqual(response['location'],
-                             '/issues/the-only-issue-in-the-database/')
+            response = self.client.post('/issues/new', data={'issue_text': 'A new issue item'})
+            self.assertRedirects(response, '/issues/the-only-issue-in-the-database/')
+            
