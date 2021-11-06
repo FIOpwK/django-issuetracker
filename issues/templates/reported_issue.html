@@ -5,7 +5,7 @@
     </head>
     <body>
         <h3>Submit new issue</h3>
-        <form method="post">
+        <form method="post" action="/issues/new">
 
             <label for="id_new_issue"></label><input type="text" name="issue_text" id="id_new_issue" placeholder="Submit a new issue">
             {% csrf_token %}

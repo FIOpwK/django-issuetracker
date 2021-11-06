@@ -57,13 +57,13 @@ class ListViewTest(TestCase):
 
     class NewIssueTest(TestCase):
         def test_can_save_POST_request(self):
-            self.client.post('/issues/new', data=
-            {'issue_text': 'A new issue item'})
+            self.client.post('/issues/new', data={'issue_text': 'A new issue item'})
             self.assertEqual(Issue.objects.count(), 1)
             new_issue = Issue.objects.first()
             self.assertEqual(new_issue.text, 'A new issue item')
 
         def test_redirects_after_POST(self):
             response = self.client.post('/issues/new', data={'issue_text': 'A new issue item'})
+            self.assertEqual(response.status_code, 302)
             self.assertRedirects(response, '/issues/the-only-issue-in-the-database/')
             
