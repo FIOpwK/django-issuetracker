@@ -1,12 +1,15 @@
 <html lang="en">
   <body>
-    <table id="id_issue_table">
-      {% for issue in issues %} {% if issue.text %}
-      <tr>
-        <th>{{ issue.id }}</th>
-        <td>{{ issue.text }}</td>
-      </tr>
-      {% endif %} {% endfor %}
-    </table>
+  <div class="container table-responsive">
+      <table id="id_issue_table">
+          {% for issue in issues %} {% if issue.text %}
+              <tr>
+                  <th>{{ issue.id }}</th>
+                  <td>{{ issue.text }}</td>
+              </tr>
+          {% endif %} {% endfor %}
+      </table>
+
+  </div>
   </body>
 </html>
