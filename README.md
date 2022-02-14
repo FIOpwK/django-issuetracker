@@ -1,5 +1,5 @@
 # django-issuetracker
-Django(3.2.7) Issue Tracker project with testing 
+Django(3.2.8) Issue Tracker project with testing
 
 &nbsp;
 ### `virtualenv` environment <a name="virtualenv"></a>
@@ -38,11 +38,11 @@ python manage.py runserver
 ```
 
 # dependencies
-- selenium webdriver
+- selenium webdriver (4.0.0)
 - geckodriver
-- django
-- postgresql
-- psycopg2
+- django (3.2.8)
+- postgresql (PostgresSQL 14)
+- psycopg2 (2..9.1)
 
 # testing
 unit test:  `py.exe manage.py test issues`,
