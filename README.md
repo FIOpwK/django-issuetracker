@@ -43,6 +43,7 @@ python manage.py runserver
 - django (3.2.8)
 - postgresql (PostgresSQL 14)
 - psycopg2 (2..9.1)
+- django-environ (0.8.1)
 
 # testing
 unit test:  `py.exe manage.py test issues`,
